@@ -7,6 +7,7 @@ import retrofit2.create
 
 object ApiFactory {
     private const val BASE_URL = "https://min-api.cryptocompare.com/data/"
+    const val BASE_IMAGE_URL = "https://min-api.cryptocompare.com"
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
