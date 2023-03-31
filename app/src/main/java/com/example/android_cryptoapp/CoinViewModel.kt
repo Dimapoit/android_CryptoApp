@@ -9,7 +9,6 @@ import com.example.android_cryptoapp.database.AppDatabase
 import com.example.android_cryptoapp.pojo.CoinPriceInfo
 import com.example.android_cryptoapp.pojo.CoinPriceInfoRawData
 import com.google.gson.Gson
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -42,9 +41,6 @@ class CoinViewModel(application: Application) : AndroidViewModel(application) {
 //            })
 //        compositeDisposable.add(disposable)
 //    }
-
-
-
     private fun loadData() {
         val disposable = ApiFactory.apiService.getTopCoinsInfo()
             .map { it.data?.map { it.coinInfo?.name }?.joinToString(",") }
