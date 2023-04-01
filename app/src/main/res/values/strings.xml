@@ -8,5 +8,6 @@
     <string name="max_price_label">Максимум за день:</string>
     <string name="last_market_label">Последняя сделка:</string>
     <string name="last_updated_label">Обновлено:</string>
+    <string name="slash1">/</string>
 
 </resources>

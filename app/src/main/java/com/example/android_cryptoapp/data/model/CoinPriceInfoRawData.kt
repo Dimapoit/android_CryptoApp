@@ -1,4 +1,4 @@
-package com.example.android_cryptoapp.pojo
+package com.example.android_cryptoapp.data.model
 
 import com.google.gson.JsonObject
 import com.google.gson.annotations.Expose
