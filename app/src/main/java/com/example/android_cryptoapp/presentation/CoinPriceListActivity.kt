@@ -25,19 +25,16 @@ class CoinPriceListActivity : AppCompatActivity() {
         setContentView(binding.root)
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
         val adapter = CoinInfoAdapter(this)
-
+        binding.rvCoinPriceList.adapter = adapter
+        binding.rvCoinPriceList.itemAnimator = null
+        viewModel.coinInfoList.observe(this) {
+            adapter.submitList(it)
+        }
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
             override fun onCoinClick(coinPriceInfo: CoinInfo) {
                 val intent = newIntent(this@CoinPriceListActivity, coinPriceInfo.fromSymbol)
                 startActivity(intent)
             }
-
-        }
-//        val rvCoinPriceList = findViewById<RecyclerView>(R.id.rv_coin_price_list)
-        binding.rvCoinPriceList.adapter = adapter
-        viewModel.coinInfoList.observe(this) {
-            Log.d("it", it.toString())
-            adapter.coinInfoList = it
         }
     }
 }
