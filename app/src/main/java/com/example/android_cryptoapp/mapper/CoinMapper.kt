@@ -6,6 +6,9 @@ import com.example.android_cryptoapp.data.network.model.CoinInfoJsonContainerDto
 import com.example.android_cryptoapp.data.network.model.CoinNamesListDto
 import com.example.android_cryptoapp.domain.CoinInfo
 import com.google.gson.Gson
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CoinMapper {
 
@@ -17,7 +20,7 @@ class CoinMapper {
         highDay = coinInfoDto.highDay,
         lowDay = coinInfoDto.lowDay,
         lastMarket = coinInfoDto.lastMarket,
-        imageUrl = coinInfoDto.imageUrl
+        imageUrl = BASE_IMAGE_URL + coinInfoDto.imageUrl
     )
 
     fun mapJsonContainerToListCoinDto(jsonContainerDto: CoinInfoJsonContainerDto): List<CoinInfoDto> {
@@ -39,18 +42,34 @@ class CoinMapper {
     }
 
     fun mapNamesListToString(namesListDto: CoinNamesListDto): String {
-        return namesListDto.names?.map { it.coinNameDto?.name }?.joinToString { "," } ?: ""
+        return namesListDto.names?.map {
+            it.coinNameDto?.name }?.joinToString(",")?: ""
     }
 
     fun dbModelToEntity(coinInfoDbModel: CoinInfoDbModel): CoinInfo = CoinInfo(
         fromSymbol = coinInfoDbModel.fromSymbol,
         toSymbol = coinInfoDbModel.toSymbol,
         price = coinInfoDbModel.price,
-        lastUpdate = coinInfoDbModel.lastUpdate,
+        lastUpdate = convertTimestampToTime(coinInfoDbModel.lastUpdate),
         highDay = coinInfoDbModel.highDay,
         lowDay = coinInfoDbModel.lowDay,
         lastMarket = coinInfoDbModel.lastMarket,
         imageUrl = coinInfoDbModel.imageUrl
     )
+
+    private fun convertTimestampToTime (timestamp: Long?): String {
+        if (timestamp == null) return ""
+        val stamp = Timestamp(timestamp * 1000)
+        val date = Date(stamp.time)
+        val pattern = "HH:mm:ss"
+        val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+        sdf.timeZone = TimeZone.getDefault()
+        return sdf.format(date)
+    }
+
+    companion object {
+        const val BASE_IMAGE_URL = "https://min-api.cryptocompare.com"
+    }
+
 }
 

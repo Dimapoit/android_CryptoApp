@@ -14,6 +14,8 @@ class CoinDetailActivity : AppCompatActivity() {
 
     private lateinit var viewModel: CoinViewModel
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coin_detail)
@@ -33,11 +35,11 @@ class CoinDetailActivity : AppCompatActivity() {
         val tvLastMarket = findViewById<TextView>(R.id.tvLastMarketD)
 
 
-        val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL)
+        val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: EMPTY_SYMBOL
 
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
-        viewModel.getDetailInfo(fromSymbol!!).observe(this) {
-            Picasso.get().load(it.getFullImageUrl())
+        viewModel.getCoinInfo(fromSymbol).observe(this) {
+            Picasso.get().load(it.imageUrl)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(ivLogo)
             tvFromSymbol.text = it.fromSymbol
@@ -45,16 +47,15 @@ class CoinDetailActivity : AppCompatActivity() {
             tvPrice.text = it.price
             tvMinPrice.text = it.lowDay
             tvMaxPrice.text = it.highDay
-            tvLastUpdate.text = it.getFormattedTime()
+            tvLastUpdate.text = it.lastUpdate
             tvLastMarket.text = it.lastMarket
 
         }
-
-
     }
 
     companion object {
         const val EXTRA_FROM_SYMBOL = "fSym"
+        const val EMPTY_SYMBOL = ""
 
         fun newIntent(context: Context, fromSymbol: String): Intent {
             val intent = Intent(context, CoinDetailActivity::class.java)

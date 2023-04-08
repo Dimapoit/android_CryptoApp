@@ -2,7 +2,6 @@ package com.example.android_cryptoapp.data.network
 
 import com.example.android_cryptoapp.data.network.model.CoinNamesListDto
 import com.example.android_cryptoapp.data.network.model.CoinInfoJsonContainerDto
-import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 
