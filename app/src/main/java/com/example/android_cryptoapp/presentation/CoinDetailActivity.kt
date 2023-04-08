@@ -8,48 +8,41 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_cryptoapp.R
+import com.example.android_cryptoapp.databinding.ActivityCoinDetailBinding
 import com.squareup.picasso.Picasso
 
 class CoinDetailActivity : AppCompatActivity() {
 
     private lateinit var viewModel: CoinViewModel
 
-
-
+    private val binding by lazy {
+        ActivityCoinDetailBinding.inflate(layoutInflater)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_coin_detail)
+        setContentView(binding.root)
 
         if (!intent.hasExtra(EXTRA_FROM_SYMBOL)) {
             finish()
             return
         }
-        val ivLogo = findViewById<ImageView>(R.id.ivLogoCoinD)
-        val tvFromSymbol = findViewById<TextView>(R.id.tvFromSymbolD)
-        val tvToSymbol = findViewById<TextView>(R.id.tvToSymbolD)
-
-        val tvPrice = findViewById<TextView>(R.id.tvPriceD)
-        val tvMinPrice = findViewById<TextView>(R.id.tvMinPriceD)
-        val tvMaxPrice = findViewById<TextView>(R.id.tvMaxPriceD)
-        val tvLastUpdate = findViewById<TextView>(R.id.tvLastUpdateD)
-        val tvLastMarket = findViewById<TextView>(R.id.tvLastMarketD)
-
 
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: EMPTY_SYMBOL
 
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
         viewModel.getCoinInfo(fromSymbol).observe(this) {
-            Picasso.get().load(it.imageUrl)
-                .placeholder(R.drawable.ic_launcher_background)
-                .into(ivLogo)
-            tvFromSymbol.text = it.fromSymbol
-            tvToSymbol.text = it.toSymbol
-            tvPrice.text = it.price
-            tvMinPrice.text = it.lowDay
-            tvMaxPrice.text = it.highDay
-            tvLastUpdate.text = it.lastUpdate
-            tvLastMarket.text = it.lastMarket
-
+            with(binding) {
+                Picasso.get().load(it.imageUrl)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(ivLogo)
+                tvFromSymbolD.text = it.fromSymbol
+                tvToSymbolD.text = it.toSymbol
+                tvPriceD.text = it.price
+                tvMinPriceD.text = it.lowDay
+                tvMaxPriceD.text = it.highDay
+                tvLastUpdateD.text = it.lastUpdate
+                tvLastMarketD.text = it.lastMarket
+            }
         }
     }
 
