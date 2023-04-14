@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
-import com.example.android_cryptoapp.R
 import com.example.android_cryptoapp.presentation.CoinDetailActivity.Companion.newIntent
 import com.example.android_cryptoapp.presentation.adapters.CoinInfoAdapter
-import com.example.android_cryptoapp.data.network.model.CoinInfoDto
 import com.example.android_cryptoapp.databinding.ActivityCoinPriceListBinding
 import com.example.android_cryptoapp.domain.CoinInfo
 
