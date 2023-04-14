@@ -9,5 +9,6 @@
     <string name="last_market_label">Последняя сделка:</string>
     <string name="last_updated_label">Обновлено:</string>
     <string name="slash1">/</string>
+    <string name="tvtosymbol">tvToSymbol</string>
 
 </resources>
