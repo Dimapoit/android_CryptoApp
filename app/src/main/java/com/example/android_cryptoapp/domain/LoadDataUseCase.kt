@@ -1,6 +1,10 @@
 package com.example.android_cryptoapp.domain
 
-class LoadDataUseCase(private val coinRepository: CoinRepository) {
+import javax.inject.Inject
+
+class LoadDataUseCase @Inject constructor(
+    private val coinRepository: CoinRepository
+    ) {
 
     suspend operator fun invoke() = coinRepository.loadData()
 }
